@@ -176,12 +176,12 @@ class BaseSerializer(Field):
     #####
     # Field methods - used when the serializer class is itself used as a field.
 
-    def initialize(self, parent, field_name):
+    def initialize(self, parent, field_name, parent_obj=None):
         """
         Same behaviour as usual Field, except that we need to keep track
         of state so that we can deal with handling maximum depth.
         """
-        super(BaseSerializer, self).initialize(parent, field_name)
+        super(BaseSerializer, self).initialize(parent, field_name, parent_obj)
         if parent.opts.depth:
             self.opts.depth = parent.opts.depth - 1
 
@@ -269,7 +269,7 @@ class BaseSerializer(Field):
         ret.fields = {}
 
         for field_name, field in self.fields.items():
-            field.initialize(parent=self, field_name=field_name)
+            field.initialize(parent=self, field_name=field_name, parent_obj=obj)
             key = self.get_field_key(field_name)
             value = field.field_to_native(obj, field_name)
             ret[key] = value

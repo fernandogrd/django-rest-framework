@@ -50,8 +50,8 @@ class RelatedField(WritableField):
         kwargs['read_only'] = kwargs.pop('read_only', self.read_only)
         super(RelatedField, self).__init__(*args, **kwargs)
 
-    def initialize(self, parent, field_name):
-        super(RelatedField, self).initialize(parent, field_name)
+    def initialize(self, parent, field_name, parent_obj=None):
+        super(RelatedField, self).initialize(parent, field_name, parent_obj)
         if self.queryset is None and not self.read_only:
             try:
                 manager = getattr(self.parent.opts.model, self.source or field_name)

@@ -62,7 +62,7 @@ class Field(object):
 
         self.source = source
 
-    def initialize(self, parent, field_name):
+    def initialize(self, parent, field_name, parent_obj=None):
         """
         Called to set up a field prior to field_to_native or field_from_native.
 
@@ -73,6 +73,7 @@ class Field(object):
         self.root = parent.root or parent
         self.context = self.root.context
         self.partial = self.root.partial
+        self.parent_obj = parent_obj
         if self.partial:
             self.required = False
 
